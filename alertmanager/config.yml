@@ -1,10 +1,18 @@
 route:
-  receiver: 'slack'
+  receiver: 'slack-and-mail'
 
 receivers:
-  - name: 'slack'
-#       slack_configs:
-#           - send_resolved: true
-#             username: '<username>'
-#             channel: '#<channel-name>'
-#             api_url: '<incomming-webhook-url>'
+  - name: 'slack-and-mail'
+
+    slack_configs:
+     - channel: '#test-alertmanager'
+       api_url: 'https://hooks.slack.com/services/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'
+       text: 'https://internal.myorg.net/wiki/alerts/{{ .GroupLabels.app }}/{{ .GroupLabels.alertname }}'
+
+#    email_configs:
+#      - to: 'polygon4games@gmail.com'
+#        from: 'hldtux@gmail.com'
+#        smarthost: smtp.gmail.com:587
+#        auth_username: 'polygon4games@gmail.com'
+#        auth_identity: 'polygon4games@gmail.com'
+#        auth_password: ''

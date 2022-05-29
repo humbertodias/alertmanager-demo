@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 volumes:
   prometheus_data: {}
@@ -14,9 +14,6 @@ services:
     build: app
     ports:
       - "8080:8080"
-    networks:
-      - back-tier
-      - front-tier
 
   prometheus:
     image: prom/prometheus
@@ -29,12 +26,9 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-admin-api'
     ports:
       - "9090:9090"
-#    links:
-#      - alertmanager:alertmanager
-    networks:
-      - back-tier
     restart: always
 
   alertmanager:
@@ -43,12 +37,12 @@ services:
       - "9093:9093"
     volumes:
       - ./alertmanager/:/etc/alertmanager/
-    networks:
-      - back-tier
     restart: always
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
+    environment:
+      - SMTP_AUTH_PASSWORD=TODO
 
   grafana:
     image: grafana/grafana
@@ -61,7 +55,4 @@ services:
       - ./grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
       - ./grafana/config.monitoring
-    networks:
-      - back-tier
-      - front-tier
     restart: always
