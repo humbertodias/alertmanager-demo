@@ -22,7 +22,7 @@ docker-compose up
 | Service              | URL                                                |
 |----------------------|----------------------------------------------------|
 | app - openapi        | [8080](http://localhost:8080/swagger-ui.html)      |
-| app - metrics        | [8080](hhttp://localhost:8080/actuator/prometheus) |
+| app - metrics        | [8080](http://localhost:8080/actuator/prometheus) |
 | prometheus           | [9090](http://localhost:9090)                      |
 | alertmanager         | [9093](http://localhost:9093)                      |
 | grafana - ui         | [3000](http://localhost:3000)                      |
@@ -33,7 +33,7 @@ docker-compose up
 Reset database
 
 ```
-curl -X POST -g 'http://localhost:9090/api/v1/admin/tsdb/delete_series?match[]={}'
+curl -XPOST -g 'http://localhost:9090/api/v1/admin/tsdb/delete_series?match[]={}'
 ```
 
 Restarting application
@@ -69,6 +69,6 @@ for i in {1..500}; do   echo "Command no. $i"; sh -c  "curl -XGET http://localho
 
 ### Ref
 
-* https://awesome-prometheus-alerts.grep.to/rules.html
-* https://api.slack.com/messaging/webhooks
-* https://prometheus.io/docs/alerting/latest/alertmanager/
+* [Prometheus - Rules](https://awesome-prometheus-alerts.grep.to/rules.html)
+* [AlertManager - Slack](https://api.slack.com/messaging/webhooks)
+* [AlertManager - Doc](https://prometheus.io/docs/alerting/latest/alertmanager/)
